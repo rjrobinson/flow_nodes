@@ -1,8 +1,53 @@
+# RuboCop configuration for FlowNodes
+
 AllCops:
+  NewCops: enable
   TargetRubyVersion: 3.1
+  SuggestExtensions: false
+  Exclude:
+    - 'vendor/**/*'
+    - 'tmp/**/*'
+    - 'bin/**/*'
+    - 'examples/**/*'
+
+# Layout
+Layout/LineLength:
+  Max: 120
+  Exclude:
+    - 'spec/**/*'
+
+# Style
+Style/Documentation:
+  Enabled: false
 
 Style/StringLiterals:
   EnforcedStyle: double_quotes
 
-Style/StringLiteralsInInterpolation:
-  EnforcedStyle: double_quotes
+Style/HashSyntax:
+  EnforcedStyle: ruby19
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+
+# Metrics
+Metrics/ClassLength:
+  Max: 150
+
+Metrics/MethodLength:
+  Max: 20
+  Exclude:
+    - 'spec/**/*'
+
+Metrics/BlockLength:
+  Max: 30
+  Exclude:
+    - 'spec/**/*'
+    - 'Rakefile'
+    - '*.gemspec'
+
+# Naming
+Naming/MethodParameterName:
+  MinNameLength: 1

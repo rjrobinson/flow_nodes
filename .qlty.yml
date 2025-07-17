@@ -1,0 +1,40 @@
+# Qlty configuration for FlowNodes
+version: 1
+
+# Coverage configuration
+coverage:
+  exclude_paths:
+    - "spec/**/*"
+    - "examples/**/*"
+    - "vendor/**/*"
+    - "tmp/**/*"
+    - "bin/**/*"
+  
+  # Minimum coverage thresholds
+  thresholds:
+    total: 90
+    changed: 80
+
+# Code quality tools
+tools:
+  rubocop:
+    enabled: true
+    config: .rubocop.yml
+  
+  reek:
+    enabled: false  # Disable reek for now
+  
+  bundler_audit:
+    enabled: true
+
+# Issue tracking
+issues:
+  exclude_paths:
+    - "spec/**/*"
+    - "examples/**/*"
+    - "vendor/**/*"
+
+# Formatting
+formatting:
+  exclude_paths:
+    - "examples/**/*"  # Allow examples to be more relaxed

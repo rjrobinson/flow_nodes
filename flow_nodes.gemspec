@@ -8,11 +8,11 @@ Gem::Specification.new do |spec|
   spec.authors = ["RJ Robinson"]
   spec.email = ["rj@trainual.com"]
 
-  spec.summary = "A Ruby port of PocketFlow, the 100-line minimalist LLM framework."
-  spec.description = "PocketFlow for Ruby brings the power and simplicity of the original Python PocketFlow to " \
-                     "the Ruby ecosystem. It provides a lightweight, graph-based core for building powerful " \
-                     "and expressive LLM applications like Agents, Workflows, and RAG, without the bloat of " \
-                     "larger frameworks."
+  spec.summary = "A Ruby port of PocketFlow, the minimalist LLM framework."
+  spec.description = "FlowNodes is a Ruby port of PocketFlow, the Python framework created by The Pocket. " \
+                     "It brings the power and simplicity of PocketFlow's graph-based architecture to the Ruby " \
+                     "ecosystem. Build powerful LLM applications like Agents, Workflows, and RAG systems " \
+                     "with minimal code and maximum expressiveness."
   spec.homepage = "https://github.com/rjrobinson/flow_nodes"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 3.1.0"

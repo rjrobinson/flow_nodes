@@ -10,17 +10,17 @@
 
 FlowNodes is a Ruby gem that brings the lightweight, expressive power of [PocketFlow](https://github.com/The-Pocket/PocketFlow) to the Ruby ecosystem. It provides a minimal, graph-based core for building powerful LLM applications like Agents, Workflows, and RAG, without the bloat of larger frameworks.
 
-## About PocketFlow
+## Design Philosophy
 
-This project is inspired by and based on [PocketFlow](https://github.com/The-Pocket/PocketFlow), a Python framework created by [The Pocket](https://github.com/The-Pocket). PocketFlow pioneered the minimalist approach to LLM application development with its elegant, graph-based architecture that enables complex workflows in just a few lines of code.
+FlowNodes is inspired by and based on [PocketFlow](https://github.com/The-Pocket/PocketFlow), a Python framework created by [The Pocket](https://github.com/The-Pocket). We've adapted PocketFlow's elegant, minimalist approach to LLM application development for the Ruby ecosystem.
 
-**Key features inherited from PocketFlow:**
+**Core principles:**
 - **Minimalist Design**: Core functionality in under 500 lines of code
 - **Graph-based Architecture**: Connect nodes to create complex workflows
 - **LLM-First**: Built specifically for Large Language Model applications
 - **Extensible**: Easy to extend with custom nodes and flows
 
-FlowNodes maintains the same philosophy and API patterns while adapting them for Ruby developers and the Ruby ecosystem. Full credit goes to the original PocketFlow team for the elegant design and minimalist approach.
+FlowNodes maintains the same philosophy and API patterns as PocketFlow while providing a native Ruby experience. This ensures Ruby developers can leverage the proven design patterns that make PocketFlow so effective.
 
 ## Installation
 

@@ -8,7 +8,7 @@ module FlowNodes
     def _run(s)
       batch_params = prep(s) || []
       batch_params.each do |item_params|
-        _orch(s, params: @params.merge(item_params))
+        _orch(@params.merge(item_params))
       end
       post(s, batch_params, nil)
     end

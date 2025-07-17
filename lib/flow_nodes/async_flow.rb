@@ -20,7 +20,7 @@ module FlowNodes
 
     def _run_async(s)
       prepared_params = prep_async(s)
-      result = _orch_async(s, params: prepared_params)
+      result = _orch_async(s, params: prepared_params || @params)
       post_async(s, prepared_params, result)
       result
     end
@@ -37,7 +37,7 @@ module FlowNodes
       while current_node
         current_node.set_params(flow_params)
         last_result = if current_node.is_a?(AsyncNode)
-                        current_node._run_async(state)
+                        current_node.send(:_run_async, state)
                       else
                         current_node._run(state)
                       end

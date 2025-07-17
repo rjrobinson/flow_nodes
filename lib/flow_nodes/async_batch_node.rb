@@ -6,7 +6,9 @@ module FlowNodes
     protected
 
     def _exec_async(items)
-      Array(items).map { |item| super(item) }
+      return [] if items.nil?
+      items_array = items.is_a?(Array) ? items : [items]
+      items_array.map { |item| super(item) }
     end
   end
 end

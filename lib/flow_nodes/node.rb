@@ -12,6 +12,16 @@ module FlowNodes
       @current_retry = 0
     end
 
+    # Public method to execute the node's logic with retries.
+    # This is the entry point for a flow to run a node.
+    def _run(s)
+      prepared_params = prep(s)
+      actual_params = prepared_params || @params
+      execution_result = _exec(actual_params)
+      post(s, actual_params, execution_result)
+      execution_result
+    end
+
     protected
 
     # Internal execution logic with retries.

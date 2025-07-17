@@ -8,7 +8,9 @@ module FlowNodes
     # @note This uses standard Ruby threads and is subject to the Global VM Lock (GVL).
     # It is best suited for I/O-bound tasks, not for parallelizing CPU-bound work.
     def _exec_async(items)
-      threads = Array(items).map { |item| Thread.new { super(item) } }
+      return [] if items.nil?
+      items_array = items.is_a?(Array) ? items : [items]
+      threads = items_array.map { |item| Thread.new { super(item) } }
       threads.map(&:value)
     end
   end

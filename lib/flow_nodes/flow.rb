@@ -21,24 +21,30 @@ module FlowNodes
     protected
 
     # Main orchestration logic that walks through the node graph.
-    def _orch(state, params: nil)
+    def _orch(initial_params)
       raise "Flow has no start node" unless @start_node
 
       current_node = @start_node.dup
-      flow_params = params || @params
-      last_result = nil
+      current_params = initial_params
 
-      while current_node
-        current_node.set_params(flow_params)
-        last_result = current_node._run(state)
-        current_node = get_next_node(current_node, last_result)&.dup
+      loop do
+        # Merge the node's own params with the incoming params from the flow.
+        # The flow's params take precedence.
+        merged_params = current_node.params.merge(current_params || {})
+        current_node.set_params(merged_params)
+        current_params = merged_params # Ensure current_params is updated for the next iteration
+
+        action = current_node._run(current_node.params)
+
+        # If the node returns a symbol, it's an action to determine the next node.
+        current_node = get_next_node(current_node, action)&.dup
+        break unless current_node
       end
-      last_result
     end
 
     def _run(s)
       prepared_params = prep(s)
-      result = _orch(s, params: prepared_params || @params)
+      result = _orch(prepared_params || @params)
       post(s, prepared_params, result)
       result
     end

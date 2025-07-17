@@ -39,8 +39,9 @@ module FlowNodes
 
     def _run_async(s)
       prepared_params = prep_async(s)
-      result = _exec_async(prepared_params)
-      post_async(s, prepared_params, result)
+      actual_params = prepared_params || @params
+      result = _exec_async(actual_params)
+      post_async(s, actual_params, result)
       result
     end
   end

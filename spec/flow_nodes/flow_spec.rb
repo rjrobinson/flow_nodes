@@ -20,8 +20,8 @@ end
 class TestNode < FlowNodes::Node
   attr_reader :executed_params, :name
 
-  def initialize(name:, action_to_return: nil, tracker: nil, **options)
-    super(**options)
+  def initialize(name:, action_to_return: nil, tracker: nil, **)
+    super(**)
     @name = name
     @action_to_return = action_to_return
     @tracker = tracker

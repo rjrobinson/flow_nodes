@@ -21,8 +21,8 @@ end
 class TestBatchNode < FlowNodes::Node
   attr_reader :name, :tracker, :action_to_return
 
-  def initialize(name:, tracker: nil, action_to_return: nil, **options)
-    super(**options)
+  def initialize(name:, tracker: nil, action_to_return: nil, **)
+    super(**)
     @name = name
     @tracker = tracker
     @action_to_return = action_to_return

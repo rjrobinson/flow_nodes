@@ -6,8 +6,8 @@ require "spec_helper"
 class TestBatchNodeImpl < FlowNodes::BatchNode
   attr_reader :name, :processed_items
 
-  def initialize(name:, **options)
-    super(**options)
+  def initialize(name:, **)
+    super(**)
     @name = name
     @processed_items = []
   end
@@ -27,8 +27,8 @@ end
 class TestBatchNodeWithFailure < FlowNodes::BatchNode
   attr_reader :name, :processed_items, :should_fail_on
 
-  def initialize(name:, should_fail_on: [], **options)
-    super(**options)
+  def initialize(name:, should_fail_on: [], **)
+    super(**)
     @name = name
     @processed_items = []
     @should_fail_on = should_fail_on

@@ -24,8 +24,8 @@ end
 class TestAsyncNode < FlowNodes::AsyncNode
   attr_reader :name, :delay, :executed_params
 
-  def initialize(name:, delay: 0, action_to_return: nil, tracker: nil, **options)
-    super(**options)
+  def initialize(name:, delay: 0, action_to_return: nil, tracker: nil, **)
+    super(**)
     @name = name
     @delay = delay
     @action_to_return = action_to_return
@@ -45,8 +45,8 @@ end
 class TestSyncNode < FlowNodes::Node
   attr_reader :name, :executed_params
 
-  def initialize(name:, action_to_return: nil, tracker: nil, **options)
-    super(**options)
+  def initialize(name:, action_to_return: nil, tracker: nil, **)
+    super(**)
     @name = name
     @action_to_return = action_to_return
     @tracker = tracker

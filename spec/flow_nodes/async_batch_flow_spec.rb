@@ -24,8 +24,8 @@ end
 class TestAsyncBatchNode < FlowNodes::AsyncNode
   attr_reader :name, :tracker, :delay
 
-  def initialize(name:, tracker: nil, delay: 0, **options)
-    super(**options)
+  def initialize(name:, tracker: nil, delay: 0, **)
+    super(**)
     @name = name
     @tracker = tracker
     @delay = delay

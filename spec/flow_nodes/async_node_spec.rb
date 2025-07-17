@@ -6,8 +6,8 @@ require "spec_helper"
 class TestAsyncNodeWithRetries < FlowNodes::AsyncNode
   attr_reader :name, :attempt_count, :should_fail_until
 
-  def initialize(name:, should_fail_until: 0, **options)
-    super(**options)
+  def initialize(name:, should_fail_until: 0, **)
+    super(**)
     @name = name
     @attempt_count = 0
     @should_fail_until = should_fail_until

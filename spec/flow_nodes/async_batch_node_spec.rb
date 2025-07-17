@@ -6,8 +6,8 @@ require "spec_helper"
 class TestAsyncBatchNodeImpl < FlowNodes::AsyncBatchNode
   attr_reader :name, :processed_items, :processing_order
 
-  def initialize(name:, **options)
-    super(**options)
+  def initialize(name:, **)
+    super(**)
     @name = name
     @processed_items = []
     @processing_order = []
@@ -32,8 +32,8 @@ end
 class TestAsyncBatchNodeWithDelay < FlowNodes::AsyncBatchNode
   attr_reader :name, :processed_items, :delay
 
-  def initialize(name:, delay: 0, **options)
-    super(**options)
+  def initialize(name:, delay: 0, **)
+    super(**)
     @name = name
     @processed_items = []
     @delay = delay
@@ -58,8 +58,8 @@ end
 class TestAsyncBatchNodeWithFailure < FlowNodes::AsyncBatchNode
   attr_reader :name, :processed_items, :should_fail_on
 
-  def initialize(name:, should_fail_on: [], **options)
-    super(**options)
+  def initialize(name:, should_fail_on: [], **)
+    super(**)
     @name = name
     @processed_items = []
     @should_fail_on = should_fail_on

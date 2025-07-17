@@ -51,3 +51,11 @@ Metrics/BlockLength:
 # Naming
 Naming/MethodParameterName:
   MinNameLength: 1
+
+Naming/AccessorMethodName:
+  Enabled: false
+
+# Lint
+Lint/ConstantDefinitionInBlock:
+  Exclude:
+    - 'spec/**/*'

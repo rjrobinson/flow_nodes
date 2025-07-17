@@ -208,6 +208,12 @@ FlowNodes is built around several core classes:
 - **`AsyncParallelBatchNode`**: Async parallel batch processing
 - **`AsyncFlow`**: Orchestrates async and sync nodes together
 
+## Tutorial
+
+For a comprehensive tutorial on building LLM applications with FlowNodes, check out our step-by-step guide:
+
+📚 **[Complete FlowNodes Tutorial](https://code2tutorial.com/tutorial/927c15a8-5bba-45d8-a999-6ee873562c5a/index.md)**
+
 ## Examples
 
 See the [`examples/`](examples/) directory for complete examples:

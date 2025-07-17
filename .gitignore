@@ -9,3 +9,17 @@
 
 # rspec failure tracking
 .rspec_status
+
+# Gem build artifacts
+*.gem
+*.gz
+
+# IDE files
+.idea/
+*.iml
+
+# Claude CLI
+.claude/
+
+# RBS type signatures (optional)
+/sig/

@@ -105,7 +105,7 @@ RSpec.describe FlowNodes::AsyncParallelBatchNode do
                              processed_2_parallel_batch_node
                              processed_3_parallel_batch_node
                            ])
-      expect(node.processed_items).to eq(items)
+      expect(node.processed_items).to match_array(items)
     end
 
     it "uses different threads for different items" do
@@ -440,7 +440,7 @@ RSpec.describe FlowNodes::AsyncParallelBatchNode do
       node.run_async("test_state")
 
       # processed_items should accumulate across all items
-      expect(node.processed_items).to eq(items)
+      expect(node.processed_items).to match_array(items)
     end
   end
 
@@ -467,7 +467,7 @@ RSpec.describe FlowNodes::AsyncParallelBatchNode do
                              processed_1_parallel_batch_node
                              processed_2_parallel_batch_node
                            ])
-      expect(node.processed_items).to eq(items)
+      expect(node.processed_items).to match_array(items)
     end
 
     it "handles boolean values" do
@@ -478,7 +478,7 @@ RSpec.describe FlowNodes::AsyncParallelBatchNode do
                              processed_true_parallel_batch_node
                              processed_false_parallel_batch_node
                            ])
-      expect(node.processed_items).to eq(items)
+      expect(node.processed_items).to match_array(items)
     end
   end
 

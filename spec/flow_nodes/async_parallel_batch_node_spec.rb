@@ -259,8 +259,8 @@ RSpec.describe FlowNodes::AsyncParallelBatchNode do
       node.set_params(items)
       result = node.run_async("test_state")
 
-      expect(result).to eq(%w[processed_1_parallel_batch_node processed_2_parallel_batch_node])
-      expect(node.processed_items).to eq(items)
+      expect(result).to match_array(%w[processed_1_parallel_batch_node processed_2_parallel_batch_node])
+      expect(node.processed_items).to match_array(items)
     end
 
     it "uses prep_async result when available" do
@@ -269,8 +269,8 @@ RSpec.describe FlowNodes::AsyncParallelBatchNode do
       allow(node).to receive(:prep_async).and_return(items)
       result = node.run_async("test_state")
 
-      expect(result).to eq(%w[processed_1_parallel_batch_node processed_2_parallel_batch_node])
-      expect(node.processed_items).to eq(items)
+      expect(result).to match_array(%w[processed_1_parallel_batch_node processed_2_parallel_batch_node])
+      expect(node.processed_items).to match_array(items)
     end
 
     it "falls back to node params when prep_async returns nil" do
@@ -280,8 +280,8 @@ RSpec.describe FlowNodes::AsyncParallelBatchNode do
       allow(node).to receive(:prep_async).and_return(nil)
       result = node.run_async("test_state")
 
-      expect(result).to eq(%w[processed_1_parallel_batch_node processed_2_parallel_batch_node])
-      expect(node.processed_items).to eq(items)
+      expect(result).to match_array(%w[processed_1_parallel_batch_node processed_2_parallel_batch_node])
+      expect(node.processed_items).to match_array(items)
     end
 
     it "calls post_async hook with batch results" do

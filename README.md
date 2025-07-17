@@ -8,19 +8,25 @@
 
 **A Ruby port of the minimalist LLM framework, [PocketFlow](https://github.com/The-Pocket/PocketFlow).**
 
-FlowNodes is a Ruby gem that brings the lightweight, expressive power of [PocketFlow](https://github.com/The-Pocket/PocketFlow) to the Ruby ecosystem. It provides a minimal, graph-based core for building powerful LLM applications like Agents, Workflows, and RAG, without the bloat of larger frameworks.
+FlowNodes is a Ruby gem that brings the lightweight, expressive power
+of [PocketFlow](https://github.com/The-Pocket/PocketFlow) to the Ruby ecosystem. It provides a minimal, graph-based core
+for building powerful LLM applications like Agents, Workflows, and RAG, without the bloat of larger frameworks.
 
 ## Design Philosophy
 
-FlowNodes is inspired by and based on [PocketFlow](https://github.com/The-Pocket/PocketFlow), a Python framework created by [The Pocket](https://github.com/The-Pocket). We've adapted PocketFlow's elegant, minimalist approach to LLM application development for the Ruby ecosystem.
+FlowNodes is inspired by and based on [PocketFlow](https://github.com/The-Pocket/PocketFlow), a Python framework created
+by [The Pocket](https://github.com/The-Pocket). We've adapted PocketFlow's elegant, minimalist approach to LLM
+application development for the Ruby ecosystem.
 
 **Core principles:**
+
 - **Minimalist Design**: Core functionality in under 500 lines of code
 - **Graph-based Architecture**: Connect nodes to create complex workflows
 - **LLM-First**: Built specifically for Large Language Model applications
 - **Extensible**: Easy to extend with custom nodes and flows
 
-FlowNodes maintains the same philosophy and API patterns as PocketFlow while providing a native Ruby experience. This ensures Ruby developers can leverage the proven design patterns that make PocketFlow so effective.
+FlowNodes maintains the same philosophy and API patterns as PocketFlow while providing a native Ruby experience. This
+ensures Ruby developers can leverage the proven design patterns that make PocketFlow so effective.
 
 ## Installation
 
@@ -31,11 +37,13 @@ Add this line to your application's Gemfile:
 ```
 
 And then execute:
+
 ```bash
 $ bundle install
 ```
 
 Or install it yourself as:
+
 ```bash
 $ gem install flow_nodes
 ```
@@ -88,6 +96,7 @@ flow.run(nil)
 ### Conditional Flows
 
 ```ruby
+
 class ValidationNode < FlowNodes::Node
   def exec(params)
     params[:email]&.include?("@") ? "valid" : "invalid"
@@ -124,6 +133,7 @@ flow.run(nil)
 ### Batch Processing
 
 ```ruby
+
 class DataProcessor < FlowNodes::BatchNode
   def exec(item)
     puts "Processing: #{item}"
@@ -140,6 +150,7 @@ results = processor.run(nil)
 ### Async and Parallel Processing
 
 ```ruby
+
 class AsyncProcessor < FlowNodes::AsyncParallelBatchNode
   def exec_async(item)
     puts "Processing #{item} on thread #{Thread.current.object_id}"
@@ -157,6 +168,7 @@ results = processor.run_async(nil)
 ### Lifecycle Hooks
 
 ```ruby
+
 class LoggingNode < FlowNodes::Node
   def prep(state)
     puts "Preparing to process"
@@ -177,6 +189,7 @@ end
 ### Error Handling and Retries
 
 ```ruby
+
 class RetryNode < FlowNodes::Node
   def initialize
     super(max_retries: 3, wait: 1)
@@ -267,7 +280,8 @@ ruby examples/batch_processing.rb
 
 ## API Reference
 
-For detailed API documentation, visit the [YARD documentation](https://rubydoc.info/gems/flow_nodes) or generate it locally:
+For detailed API documentation, visit the [YARD documentation](https://rubydoc.info/gems/flow_nodes) or generate it
+locally:
 
 ```bash
 bundle exec yard doc
@@ -307,14 +321,18 @@ This project follows the [Contributor Covenant](https://www.contributor-covenant
 
 ## Acknowledgments
 
-This project is a Ruby port of the excellent [PocketFlow](https://github.com/The-Pocket/PocketFlow) Python framework created by [The Pocket](https://github.com/The-Pocket). 
+This project is a Ruby port of the excellent [PocketFlow](https://github.com/The-Pocket/PocketFlow) Python framework
+created by [The Pocket](https://github.com/The-Pocket).
 
 **Special thanks to:**
+
 - The original PocketFlow team for pioneering the minimalist LLM framework approach
 - The Python community for inspiring clean, expressive API design
 - The Ruby community for providing excellent tools and libraries that made this port possible
 
-FlowNodes would not exist without the groundbreaking work of the PocketFlow team. We encourage users to also check out the [original Python PocketFlow](https://github.com/The-Pocket/PocketFlow) and its excellent [documentation](https://the-pocket.github.io/PocketFlow/).
+FlowNodes would not exist without the groundbreaking work of the PocketFlow team. We encourage users to also check out
+the [original Python PocketFlow](https://github.com/The-Pocket/PocketFlow) and its
+excellent [documentation](https://the-pocket.github.io/PocketFlow/).
 
 ## License
 

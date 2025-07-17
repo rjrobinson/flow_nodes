@@ -78,10 +78,10 @@ RSpec.describe FlowNodes::AsyncFlow do
     it "runs a simple async flow" do
       flow = described_class.new(start: async_node1)
       async_node1 >> async_node2
-      
+
       flow.set_params({ user_id: 123 })
       result = flow.run_async(nil)
-      
+
       expect(tracker.executed_nodes.map(&:name)).to eq(%w[async1 async2])
       expect(tracker.executed_nodes[0].params).to eq({ user_id: 123 })
       expect(tracker.executed_nodes[1].params).to eq({ user_id: 123 })
@@ -91,10 +91,10 @@ RSpec.describe FlowNodes::AsyncFlow do
     it "handles mixed async and sync nodes" do
       flow = described_class.new(start: async_node1)
       async_node1 >> sync_node >> async_node2
-      
+
       flow.set_params({ action: "mixed" })
       flow.run_async(nil)
-      
+
       expect(tracker.executed_nodes.map(&:name)).to eq(%w[async1 sync async2])
       expect(tracker.executed_nodes[0].params).to eq({ action: "mixed" })
       expect(tracker.executed_nodes[1].params).to eq({ action: "mixed" })
@@ -105,14 +105,14 @@ RSpec.describe FlowNodes::AsyncFlow do
       start_node = TestAsyncNode.new(name: "start", action_to_return: "success", tracker: tracker)
       success_node = TestAsyncNode.new(name: "success", tracker: tracker)
       failure_node = TestAsyncNode.new(name: "failure", tracker: tracker)
-      
+
       flow = described_class.new(start: start_node)
       start_node.nxt(success_node, "success")
       start_node.nxt(failure_node, "failure")
-      
+
       flow.set_params({ task: "conditional" })
       flow.run_async(nil)
-      
+
       expect(tracker.executed_nodes.map(&:name)).to eq(%w[start success])
       expect(tracker.executed_nodes[0].params).to eq({ task: "conditional" })
       expect(tracker.executed_nodes[1].params).to eq({ task: "conditional" })
@@ -121,17 +121,17 @@ RSpec.describe FlowNodes::AsyncFlow do
     it "processes nodes sequentially" do
       delayed_node1 = TestAsyncNode.new(name: "delayed1", delay: 0.05, tracker: tracker)
       delayed_node2 = TestAsyncNode.new(name: "delayed2", delay: 0.05, tracker: tracker)
-      
+
       flow = described_class.new(start: delayed_node1)
       delayed_node1 >> delayed_node2
-      
+
       start_time = Time.now
       flow.run_async(nil)
       end_time = Time.now
-      
+
       expect(tracker.executed_nodes.map(&:name)).to eq(%w[delayed1 delayed2])
       expect(end_time - start_time).to be >= 0.1 # At least 100ms for both delays
-      
+
       # Verify sequential execution
       expect(tracker.execution_order[0][:time]).to be < tracker.execution_order[1][:time]
     end
@@ -147,29 +147,29 @@ RSpec.describe FlowNodes::AsyncFlow do
   describe "async lifecycle hooks" do
     it "calls prep_async and post_async hooks" do
       flow = described_class.new(start: async_node1)
-      
+
       expect(flow).to receive(:prep_async).with("test_state").and_return({ prepared: true })
       expect(flow).to receive(:post_async).with("test_state", { prepared: true }, nil)
-      
+
       flow.run_async("test_state")
     end
 
     it "uses prep_async result as flow params when available" do
       flow = described_class.new(start: async_node1)
-      
+
       allow(flow).to receive(:prep_async).and_return({ from_prep: "value" })
       flow.run_async("test_state")
-      
+
       expect(tracker.executed_nodes[0].params).to eq({ from_prep: "value" })
     end
 
     it "falls back to @params when prep_async returns nil" do
       flow = described_class.new(start: async_node1)
       flow.set_params({ from_set_params: "value" })
-      
+
       allow(flow).to receive(:prep_async).and_return(nil)
       flow.run_async("test_state")
-      
+
       expect(tracker.executed_nodes[0].params).to eq({ from_set_params: "value" })
     end
   end
@@ -184,7 +184,7 @@ RSpec.describe FlowNodes::AsyncFlow do
       start_node = TestAsyncNode.new(name: "start", action_to_return: "undefined", tracker: tracker)
       flow = described_class.new(start: start_node)
       start_node.nxt(TestAsyncNode.new(name: "defined", tracker: tracker), "defined")
-      
+
       expect { flow.run_async(nil) }.to output(/Flow ends: action 'undefined' not found/).to_stderr
       expect(tracker.executed_nodes.map(&:name)).to eq(%w[start])
     end
@@ -194,14 +194,14 @@ RSpec.describe FlowNodes::AsyncFlow do
     it "maintains parameter isolation between flow runs" do
       flow1 = described_class.new(start: async_node1)
       flow2 = described_class.new(start: async_node2)
-      
+
       flow1.set_params({ flow: "1" })
       flow2.set_params({ flow: "2" })
-      
+
       flow1.run_async(nil)
       flow2.run_async(nil)
-      
-      expect(async_node1.params).to be_empty  # Original nodes should be pristine
+
+      expect(async_node1.params).to be_empty # Original nodes should be pristine
       expect(async_node2.params).to be_empty
     end
   end

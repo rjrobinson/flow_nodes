@@ -1,5 +1,18 @@
 # frozen_string_literal: true
 
+require "simplecov"
+
+SimpleCov.start do
+  add_filter "/spec/"
+  add_filter "/vendor/"
+  add_filter "/examples/"
+
+  # Generate both HTML and the .resultset.json file for Qlty
+  formatter SimpleCov::Formatter::MultiFormatter.new([
+                                                       SimpleCov::Formatter::HTMLFormatter,
+                                                     ])
+end
+
 require "flow_nodes"
 
 RSpec.configure do |config|

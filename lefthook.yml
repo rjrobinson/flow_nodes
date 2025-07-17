@@ -1,0 +1,14 @@
+pre-commit:
+  commands:
+    rubocop:
+      run: bundle exec rubocop
+      fail_text: "RuboCop failed. Run 'bundle exec rubocop -a' to auto-fix issues."
+    
+pre-push:
+  commands:
+    tests:
+      run: bundle exec rspec
+      fail_text: "Tests failed. Please fix failing tests before pushing."
+    rubocop:
+      run: bundle exec rubocop
+      fail_text: "RuboCop failed. Run 'bundle exec rubocop -a' to auto-fix issues."

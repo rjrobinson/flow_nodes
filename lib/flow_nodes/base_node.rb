@@ -57,11 +57,10 @@ module FlowNodes
     # Creates a conditional transition to a successor node.
     # @param action [String, Symbol] The action that triggers this transition.
     # @return [ConditionalTransition] An object to define the target node.
-    def -(action)
-      unless action.is_a?(String) || action.is_a?(Symbol)
-        raise TypeError, "Action must be a String or Symbol"
-      end
-      ConditionalTransition.new(self, action.to_s)
+    def -(other)
+      raise TypeError, "Action must be a String or Symbol" unless other.is_a?(String) || other.is_a?(Symbol)
+
+      ConditionalTransition.new(self, other.to_s)
     end
 
     # Executes the main logic of the node.

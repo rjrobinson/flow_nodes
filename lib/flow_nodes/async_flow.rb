@@ -3,7 +3,7 @@
 module FlowNodes
   # A flow that can orchestrate both synchronous and asynchronous nodes.
   class AsyncFlow < Flow
-    def run(s); run_async(s); end
+    def run(s) = run_async(s)
 
     def run_async(s)
       _run_async(s)
@@ -15,8 +15,8 @@ module FlowNodes
 
     protected
 
-    def prep_async(_s); nil; end
-    def post_async(_s, _p, _e); nil; end
+    def prep_async(_s) = nil
+    def post_async(_s, _p, _e) = nil
 
     def _run_async(s)
       prepared_params = prep_async(s)

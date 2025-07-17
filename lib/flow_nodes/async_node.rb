@@ -15,9 +15,9 @@ module FlowNodes
 
     protected
 
-    def prep_async(_s); nil; end
-    def exec_async(_p); nil; end
-    def post_async(_s, _p, _e); nil; end
+    def prep_async(_s) = nil
+    def exec_async(_p) = nil
+    def post_async(_s, _p, _e) = nil
 
     def exec_fallback_async(p, exc)
       exec_fallback(p, exc)
@@ -29,7 +29,7 @@ module FlowNodes
         @current_retry = i
         begin
           return exec_async(p)
-        rescue => e
+        rescue StandardError => e
           last_exception = e
           sleep @wait if @wait.positive? && i < @max_retries - 1
         end

@@ -10,8 +10,8 @@ module FlowNodes
 
     # Completes the transition by connecting the source node to the target.
     # @param target_node [BaseNode] The node to transition to.
-    def >>(target_node)
-      @source_node.nxt(target_node, @action)
+    def >>(other)
+      @source_node.nxt(other, @action)
     end
   end
 end

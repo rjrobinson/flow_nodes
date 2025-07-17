@@ -7,6 +7,7 @@ module FlowNodes
 
     def _exec(items)
       return [] if items.nil?
+
       items_array = items.is_a?(Array) ? items : [items]
       items_array.map { |item| super(item) }
     end

@@ -34,7 +34,7 @@ module FlowNodes
         @current_retry = i
         begin
           return exec(p)
-        rescue => e
+        rescue StandardError => e
           last_exception = e
           sleep @wait if @wait.positive? && i < @max_retries - 1
         end

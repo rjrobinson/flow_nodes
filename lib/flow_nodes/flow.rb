@@ -53,7 +53,7 @@ module FlowNodes
     # For routing to work predictably, the return value of a node's `exec` method
     # should be a String or Symbol that matches a defined successor action.
     def get_next_node(current_node, action)
-      action_key = (action.nil? || action == "") ? "default" : action.to_s
+      action_key = action.nil? || action == "" ? "default" : action.to_s
       successor = current_node.successors[action_key]
 
       if !successor && !current_node.successors.empty?

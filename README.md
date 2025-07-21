@@ -52,6 +52,7 @@ $ gem install flow_nodes
 
 - **Minimal & Lightweight**: Core framework in under 500 lines of code
 - **Graph-based**: Build complex workflows with simple node connections
+- **Enhanced Routing DSL**: Ruby-idiomatic routing that eliminates repetitive syntax
 - **Async Support**: Built-in async and parallel processing capabilities
 - **Batch Processing**: Sequential and parallel batch operations
 - **Retry Logic**: Built-in retry mechanisms with customizable fallbacks
@@ -127,6 +128,49 @@ validator - :invalid >> error_handler
 
 flow = FlowNodes::Flow.new(start: validator)
 flow.set_params(email: "user@example.com")
+flow.run(nil)
+```
+
+### Enhanced Routing DSL
+
+Eliminate repetitive routing syntax when multiple conditions lead to the same flow path:
+
+```ruby
+class IntentClassifierNode < FlowNodes::Node
+  def exec(params)
+    # Classify the user's intent
+    case params[:message].downcase
+    when /technical|bug|error/ then :technical
+    when /billing|payment/ then :billing  
+    when /general|help/ then :general
+    when /urgent|escalate/ then :escalate
+    else :unknown
+    end
+  end
+end
+
+classifier = IntentClassifierNode.new
+knowledge_base = ProcessNode.new
+responder = ProcessNode.new  
+escalator = ErrorNode.new
+fallback = ErrorNode.new
+
+# OLD way (repetitive):
+# classifier - :technical >> knowledge_base >> responder
+# classifier - :billing >> knowledge_base >> responder
+# classifier - :general >> knowledge_base >> responder
+# classifier - :escalate >> escalator
+# classifier - :unknown >> fallback
+
+# NEW way (clean & DRY):
+classifier.routes(
+  [:technical, :billing, :general] => knowledge_base >> responder,
+  :escalate => escalator,
+  :unknown => fallback
+)
+
+flow = FlowNodes::Flow.new(start: classifier)
+flow.set_params(message: "I have a billing question")
 flow.run(nil)
 ```
 

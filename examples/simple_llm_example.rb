@@ -162,5 +162,79 @@ if $PROGRAM_NAME == __FILE__
   flow.set_params(text: "Artificial intelligence and machine learning are transforming modern business operations. Companies are investing heavily in automation technologies to improve efficiency and reduce costs.")
   flow.run(nil)
 
+  # Example 4: Enhanced Routing DSL (New Feature!)
+  puts "\n📋 EXAMPLE 4: Enhanced Routing DSL"
+  puts "-" * 30
+  
+  # Create a more complex classification scenario
+  class MultiClassifierNode < SimpleLLMExample::ClassificationRouterNode
+    def exec(text)
+      puts "🔍 Advanced classification..."
+      
+      # More sophisticated classification
+      case text.downcase
+      when /error|bug|crash|fail/
+        puts "📋 Classification: error_report"
+        :error_report
+      when /question|help|how/
+        puts "📋 Classification: help_request" 
+        :help_request
+      when /feedback|suggestion|improvement/
+        puts "📋 Classification: feedback"
+        :feedback
+      else
+        puts "📋 Classification: general_content"
+        :general_content
+      end
+    end
+  end
+
+  class HelpNode < FlowNodes::Node
+    def exec(text)
+      puts "❓ Processing help request..."
+      puts "💬 Here's some assistance based on your question"
+      nil
+    end
+  end
+
+  class FeedbackNode < FlowNodes::Node  
+    def exec(text)
+      puts "📝 Processing feedback..."
+      puts "🙏 Thank you for your valuable feedback!"
+      nil
+    end
+  end
+
+  # Demonstrate enhanced routing with multiple conditions going to same handler
+  input_node = SimpleLLMExample::TextInputNode.new
+  multi_classifier = MultiClassifierNode.new
+  error_handler = SimpleLLMExample::ErrorHandlerNode.new
+  general_processor = SimpleLLMExample::GeneralProcessorNode.new
+  help_node = HelpNode.new
+  feedback_node = FeedbackNode.new
+
+  input_node >> multi_classifier
+
+  # NEW: Enhanced routing DSL - multiple conditions to same target
+  puts "🔧 Using enhanced routing DSL:"
+  puts "   classifier.routes("
+  puts "     [:error_report] => error_handler,"
+  puts "     [:general_content, :help_request] => general_processor,"
+  puts "     :feedback => feedback_node"
+  puts "   )"
+
+  multi_classifier.routes(
+    :error_report => error_handler,
+    [:general_content, :help_request] => general_processor,  # Multiple conditions -> same handler
+    :feedback => feedback_node
+  )
+
+  # Test with help request (routes to general_processor)
+  puts "\n🧪 Testing enhanced routing with help request:"
+  flow = FlowNodes::Flow.new(start: input_node)
+  flow.set_params(text: "How do I optimize my workflow for better productivity?")
+  flow.run(nil)
+
   puts "\n🎯 All LLM workflow examples completed!"
+  puts "✨ New: Enhanced routing DSL eliminates repetitive syntax!"
 end

@@ -63,6 +63,58 @@ module FlowNodes
       ConditionalTransition.new(self, other.to_s)
     end
 
+    # Enhanced routing DSL that allows multiple conditions to route to the same target.
+    # Eliminates repetitive routing syntax when multiple conditions lead to the same flow path.
+    #
+    # @param route_hash [Hash] A hash mapping conditions to target nodes.
+    #   Keys can be individual conditions (String/Symbol) or arrays of conditions.
+    #   Values should be BaseNode instances or node chains (e.g., node1 >> node2).
+    # @return [BaseNode] Self to enable method chaining.
+    #
+    # @example Basic usage
+    #   node.routes(
+    #     [:technical, :billing, :general] => knowledge_base >> responder,
+    #     :escalate => escalator,
+    #     :unknown => fallback_handler
+    #   )
+    #
+    # @example Single conditions
+    #   node.routes(
+    #     :success => success_node,
+    #     :failure => failure_node
+    #   )
+    def routes(route_hash)
+      raise ArgumentError, "routes expects a Hash" unless route_hash.is_a?(Hash)
+
+      route_hash.each do |conditions, target_node|
+        # Convert single conditions to arrays for uniform processing
+        conditions_array = conditions.is_a?(Array) ? conditions : [conditions]
+        
+        # Validate that all conditions are strings or symbols
+        conditions_array.each do |condition|
+          unless condition.is_a?(String) || condition.is_a?(Symbol)
+            raise TypeError, "Route condition must be a String or Symbol, got #{condition.class}"
+          end
+        end
+
+        # Validate that target_node is a BaseNode
+        unless target_node.is_a?(BaseNode)
+          raise TypeError, "Route target must be a BaseNode, got #{target_node.class}"
+        end
+
+        # Set up the routing for each condition
+        conditions_array.each do |condition|
+          action = condition.to_s
+          if @successors.key?(action)
+            warn("routes: Overwriting successor for action '#{action}'")
+          end
+          @successors[action] = target_node
+        end
+      end
+
+      self # Enable method chaining
+    end
+
     # Executes the main logic of the node.
     # This is intended to be overridden by subclasses.
     #

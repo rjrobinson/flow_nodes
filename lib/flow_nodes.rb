@@ -13,6 +13,7 @@ require_relative "flow_nodes/async_parallel_batch_node"
 require_relative "flow_nodes/async_flow"
 require_relative "flow_nodes/async_batch_flow"
 require_relative "flow_nodes/async_parallel_batch_flow"
+require_relative "flow_nodes/flow_route"
 
 # FlowNodes is a minimalist, graph-based framework for building complex workflows
 # and agentic systems in Ruby. It is a port of the Python PocketFlow library.

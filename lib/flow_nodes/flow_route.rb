@@ -2,7 +2,7 @@
 
 module FlowNodes
   # Rails-inspired routing DSL for FlowNodes
-  # 
+  #
   # Provides a centralized, declarative way to define routing between nodes,
   # similar to Rails routes but adapted for workflow/state machine patterns.
   #
@@ -31,10 +31,10 @@ module FlowNodes
     #
     # @yield [FlowRoute] The route builder instance
     # @return [Hash] The complete routes configuration
-    def self.draw(&block)
+    def self.draw(&)
       route_builder = new
       @@current_routes = route_builder
-      route_builder.instance_eval(&block)
+      route_builder.instance_eval(&)
       @@current_routes = nil
       route_builder.routes
     end
@@ -45,7 +45,7 @@ module FlowNodes
     # @return [Hash] The loaded routes configuration
     def self.load_file(file_path)
       raise "Routes file not found: #{file_path}" unless File.exist?(file_path)
-      
+
       routes_code = File.read(file_path)
       eval(routes_code)
     end
@@ -92,10 +92,10 @@ module FlowNodes
     #
     # @param node_name [Symbol] The name of the node to configure
     # @yield Block containing route definitions for this node
-    def node(node_name, &block)
+    def node(node_name, &)
       @current_node = node_name
       @routes[@current_node] ||= []
-      instance_eval(&block)
+      instance_eval(&)
       @current_node = nil
     end
 
@@ -113,16 +113,16 @@ module FlowNodes
       @routes[@current_node] << {
         conditions: normalized_conditions,
         target: to,
-        options: options
+        options: options,
       }
     end
 
     # Convenience method for multiple routes to same target
     #
     # @param conditions [Array<Symbol>] Multiple conditions
-    # @param to [BaseNode, Object] Target node or node chain  
-    def multiple_routes(conditions, to:, **options)
-      route(conditions, to: to, **options)
+    # @param to [BaseNode, Object] Target node or node chain
+    def multiple_routes(conditions, to:, **)
+      route(conditions, to: to, **)
     end
 
     # Define conditional routing based on params or state
@@ -135,7 +135,7 @@ module FlowNodes
       @routes[@current_node] << {
         conditions: :conditional,
         target: to,
-        options: { if: condition_proc }
+        options: { if: condition_proc },
       }
     end
 
@@ -150,10 +150,10 @@ module FlowNodes
     #
     # @param namespace_name [Symbol] Namespace identifier
     # @yield Block containing namespaced route definitions
-    def namespace(namespace_name, &block)
+    def namespace(namespace_name, &)
       previous_namespace = @current_namespace
       @current_namespace = namespace_name
-      instance_eval(&block)
+      instance_eval(&)
       @current_namespace = previous_namespace
     end
 
@@ -164,7 +164,7 @@ module FlowNodes
     def resources(resource_name, **options)
       node resource_name do
         route :create, to: options[:create] if options[:create]
-        route :read, to: options[:read] if options[:read] 
+        route :read, to: options[:read] if options[:read]
         route :update, to: options[:update] if options[:update]
         route :delete, to: options[:delete] if options[:delete]
       end

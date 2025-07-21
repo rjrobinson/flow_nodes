@@ -89,7 +89,7 @@ module FlowNodes
       route_hash.each do |conditions, target_node|
         # Convert single conditions to arrays for uniform processing
         conditions_array = conditions.is_a?(Array) ? conditions : [conditions]
-        
+
         # Validate that all conditions are strings or symbols
         conditions_array.each do |condition|
           unless condition.is_a?(String) || condition.is_a?(Symbol)
@@ -98,16 +98,12 @@ module FlowNodes
         end
 
         # Validate that target_node is a BaseNode
-        unless target_node.is_a?(BaseNode)
-          raise TypeError, "Route target must be a BaseNode, got #{target_node.class}"
-        end
+        raise TypeError, "Route target must be a BaseNode, got #{target_node.class}" unless target_node.is_a?(BaseNode)
 
         # Set up the routing for each condition
         conditions_array.each do |condition|
           action = condition.to_s
-          if @successors.key?(action)
-            warn("routes: Overwriting successor for action '#{action}'")
-          end
+          warn("routes: Overwriting successor for action '#{action}'") if @successors.key?(action)
           @successors[action] = target_node
         end
       end
